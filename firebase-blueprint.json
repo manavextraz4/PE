@@ -1,0 +1,62 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "Customer account profile",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "email": { "type": "string" },
+        "phone": { "type": "string" },
+        "customerType": { "type": "string", "enum": ["Retail", "Wholesale"] },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "name", "email", "customerType"]
+    },
+    "Enquiry": {
+      "title": "Enquiry",
+      "description": "Two-wheeler spare parts enquiry from customer",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "userEmail": { "type": "string" },
+        "customerName": { "type": "string" },
+        "customerPhone": { "type": "string" },
+        "customerType": { "type": "string", "enum": ["Retail", "Wholesale"] },
+        "vehicleModel": { "type": "string" },
+        "partRequired": { "type": "string" },
+        "brandPreference": { "type": "string" },
+        "quantity": { "type": "string" },
+        "additionalNotes": { "type": "string" },
+        "status": {
+          "type": "string",
+          "enum": ["Received", "Checking Stock", "Available for Pickup", "Dispatched", "Completed"]
+        },
+        "createdAt": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": [
+        "id",
+        "userId",
+        "customerName",
+        "customerPhone",
+        "customerType",
+        "vehicleModel",
+        "partRequired",
+        "status"
+      ]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": { "$ref": "#/entities/User" },
+      "description": "Customer profiles restricted to account owner"
+    },
+    "/enquiries/{enquiryId}": {
+      "schema": { "$ref": "#/entities/Enquiry" },
+      "description": "Customer spare part enquiries with history tracking"
+    }
+  }
+}
